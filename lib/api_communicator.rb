@@ -1,5 +1,5 @@
 require 'rest-client'
-require 'json'
+require 'JSON'
 require 'pry'
 
 def get_character_movies_from_api(character_name)
@@ -16,16 +16,16 @@ def get_character_movies_from_api(character_name)
   # this collection will be the argument given to `print_movies`
   #  and that method will do some nice presentation stuff like puts out a list
   #  of movies by title. Have a play around with the puts with other info about a given film.
-  character_data = response_hash["results"].find do |item|
-     item["name"] == character_name
-   end
-  films_array_url = character_data["films"]
+    character_data = response_hash["results"].find do   |item|
+       item["name"].downcase == character_name.downcase
+    end
+    films_array_url = character_data["films"]
 
-  films_data = films_array_url.map do |data_url|
-      JSON.parse(RestClient.get(data_url))
-   end
-  films_data
-end
+    films_data = films_array_url.map do |data_url|
+        JSON.parse(RestClient.get(data_url))
+     end
+    films_data
+  end
 
 def print_movies(films)
   # some iteration magic and puts out the movies in a nice list
