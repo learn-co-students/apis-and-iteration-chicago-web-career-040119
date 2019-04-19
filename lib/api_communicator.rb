@@ -12,9 +12,6 @@ require 'pry'
 # this collection will be the argument given to `print_movies`
 #  and that method will do some nice presentation stuff like puts out a list
 #  of movies by title. Have a play around with the puts with other info about a given film
-# character_data = response_hash["results"].find do |item|
-#    item["name"] == character_name
-#  end
 
 def get_character_movies_from_api(character_name)
     response_string = RestClient.get('http://www.swapi.co/api/people/')
@@ -22,9 +19,9 @@ def get_character_movies_from_api(character_name)
     character_data = response_hash["results"].find do |character|
     character["name"].downcase == character_name.downcase
   end
-  films_array_url = character_data["films"]
-  film_data = films_array_url.map do |film_url|
-    JSON.parse(RestClient.get(film_url))
+   films_array_url = character_data["films"]
+   film_data = films_array_url.map do |film_url|
+   JSON.parse(RestClient.get(film_url))
   end
   film_data
 end
@@ -32,15 +29,15 @@ end
 
 def print_movies(films)
   # some iteration magic and puts out the movies in a nice list
-  films.each_with_index() do |data, index|
-    puts "#{index + 1} " + data["title"]
+   films.each_with_index() do |data, index|
+   puts "#{index + 1} " + data["title"]
   end
 end
 
 def show_character_movies(character)
-  formatted_character = character
-  films = get_character_movies_from_api(formatted_character)
-  print_movies(films)
+    formatted_character = character
+    films = get_character_movies_from_api(formatted_character)
+    print_movies(films)
 end
 
 
